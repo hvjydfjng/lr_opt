@@ -9,8 +9,8 @@ function [fmin,xmin] = porazr(F,a,b,eps)
         [yi,xi,delta] = first_direction(F,xi,delta);
         [yi,xi,delta] = second_direction(F,xi,delta);
     end
-    fmin = yi;
-    xmin = xi;
+    fmin = double(yi);
+    xmin = double(xi);
     end    
     function [fx] = y(F,xi)
         fx = subs(F,xi);

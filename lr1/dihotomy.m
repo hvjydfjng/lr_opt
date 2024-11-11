@@ -14,8 +14,8 @@ function [fmin,xmin] = dihotomy(F,a,b,eps)
             a = x1;
         end
     end
-    xmin = (a+b)/2;
-    fmin = y(F,xmin);
+    xmin = double((a+b)/2);
+    fmin = double(y(F,xmin));
 end    
     
     function [fx] = y(F,xi)
