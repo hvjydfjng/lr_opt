@@ -1,9 +1,9 @@
-function [fmin, xmin] = parabols(F, a, b, eps)
+function [fmin, xmin, count] = parabols(F, a, b, eps)
     % Ќачальные точки методом золотого сечени€
     t = (sqrt(5)-1)/2;
     [x1, x2] = x_solve(a, b);
     x3 = b;
-    
+    count = 0;
      a0 = a;                           %ƒл€ проверки услови€ с концами отрезков
     b0 = b;
     n = 1;
@@ -59,7 +59,7 @@ function [fmin, xmin] = parabols(F, a, b, eps)
         % Ќова€ точка минимума
         x_ = 0.5 * (x1 + x2 - a1 / a2);
         f_ = y(F, x_);
-        
+        count = count + 1;
         % ќбновление точек в зависимости от положени€ минимума
         if x_ > x1 && x_ < x2
             if f_ < f2

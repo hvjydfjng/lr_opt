@@ -1,13 +1,15 @@
-function [fmin,xmin] = dihotomy(F,a,b,eps)
+function [fmin,xmin,count] = dihotomy(F,a,b,eps)
     n = (b-a)/(eps);                  %Задаём начальное значение шага для построения графика
     x_arr = linspace(a,b,n);
     plot(x_arr,y(F,x_arr));
     grid on;
+    count = 0;
     delta = eps;                   %Начальное значение 
     while (b-a)/2 >= eps
         [x1, x2] = x_solve(a,b,delta);
         y1 = y(F,x1);
         y2 = y(F,x2);
+        count = count + 2;
         if y1 <= y2
             b = x2;
         else

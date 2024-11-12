@@ -1,12 +1,11 @@
-function [fmin, xmin] = gold(F, a, b, eps)
+function [fmin, xmin,count] = gold(F, a, b, eps)
     t = (sqrt(5) - 1) / 2;
-    n = 1;
     
     % Начальные значения
     [x1, x2] = x_solve(a, b);
     f1 = y(F, x1);
     f2 = y(F, x2);
-    
+    count = 2;
     while (b - a) / 2 > eps
         if f1 <= f2
             b = x2;
@@ -21,7 +20,7 @@ function [fmin, xmin] = gold(F, a, b, eps)
             x2 = a + t * (b - a);
             f2 = y(F, x2);
         end
-        n = n + 1;
+        count = count + 1;
     end
     
     xmin = (a + b) / 2;

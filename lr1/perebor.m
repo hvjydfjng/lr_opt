@@ -1,9 +1,11 @@
-function [fmin,xmin] = perebor(F,a,b,eps)
+function [fmin,xmin,count] = perebor(F,a,b,eps)
     n = (b-a)/eps;                  %Находим необходимое n для достижения заданной точности
+    count = 0;
     xi = linspace(a,b,n);
-    f = subs(F,xi);
+    f = double(subs(F,xi));
     plot(xi,f);
     grid on
+    count = length(f);
     [fmin,ixmin] = min(f);
     xmin = xi(ixmin);
     hold on
