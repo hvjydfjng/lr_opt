@@ -1,5 +1,5 @@
 function [fmin, xmin,count] = hords(F, a, b, eps)
-    df = dy(F)
+    df = dy(F);
     x_ = a - y(df,a)/(y(df,a) - y(df,b))*(a-b); % ѕо формуле вычисл€ем как точку мимнимума
     dfx_ = y(df, x_);
     count = 4;

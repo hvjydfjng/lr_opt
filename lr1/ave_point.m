@@ -1,5 +1,5 @@
 function [fmin, xmin,count] = ave_point(F, a, b, eps)
-    df = dy(F)
+    df = dy(F);
     x_ = (a+b)/2;
     dfx_ = y(df, x_);
     count = 1;

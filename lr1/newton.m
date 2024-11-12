@@ -1,5 +1,5 @@
 function [fmin, xmin, count] = newton(F, a, b, x0, eps)
-    df = dy(F)
+    df = dy(F);
     ddf = dy(df);
     count = 0;
     x_ = x0 - y(df,x0)/y(ddf,x0); % ѕо формуле вычисл€ем как точку мимнимума

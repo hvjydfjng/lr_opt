@@ -12,17 +12,18 @@ function [fmin, xmin, count] = parabols(F, a, b, eps)
             [x1,x2] = x_solve(a,b);
             f1 = y(F,x1);
             f2 = y(F,x2);
+            count = 2;
             curr_eps = (b-a)/2;
         end
         if ((a0 < x1) && (x1 < x2)) && ((y(F,a0) >= y(F,x1)) && (y(F,x1) <= y(F,x2)))
             x3 = x2;                %Одно из неравенств для метода парабол
-            x2 = x1
+            x2 = x1;
             x1 = a;
             break; 
         end     
         if ((x1 < x2) &&(x2 < b0)) && ((y(F,x1) >= y(F,x2)) && (y(F,x2) <= y(F,b0)))
             x3 = b;                %Одно из неравенств для метода парабол
-            x2 = x2
+            x2 = x2;
             x1 = x1;
             break; 
         end      
@@ -32,6 +33,7 @@ function [fmin, xmin, count] = parabols(F, a, b, eps)
             f2 = f1;
             x1 = b - t*(b-a);
             f1 = y(F,x1);
+            count = count + 1;
         end
         if f1 > f2 && n > 1
             a = x1;
@@ -39,6 +41,7 @@ function [fmin, xmin, count] = parabols(F, a, b, eps)
             f1 = f2;
             x2 = b - t*(b-a);
             f2 = y(F,x2);
+            count = count + 1;
         end
         n = n+1;
         curr_eps = curr_eps * t;
