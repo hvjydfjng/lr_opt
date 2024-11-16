@@ -9,6 +9,10 @@ function [fmin, xmin, count] = newton(F, a, b, x0, eps)
          x_ = x_ - y(df,x_)/y(ddf,x_);
          dfx_ = y(df, x_);
          count = count + 3;
+         if count > 1000
+            disp('Метод Ньютона не сходится, попробуйте другое начальное приближение')
+             break;
+         end
     end
     xmin = x_;
     fmin = y(F, xmin);

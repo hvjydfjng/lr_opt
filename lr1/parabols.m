@@ -4,7 +4,7 @@ function [fmin, xmin, count] = parabols(F, a, b, eps)
     [x1, x2] = x_solve(a, b);
     x3 = b;
     count = 0;
-     a0 = a;                           %Для проверки условия с концами отрезков
+    a0 = a;                           %Для проверки условия с концами отрезков
     b0 = b;
     n = 1;
     while 1                           %Несколько итераций золотого сечения для поиска подходящих точек
@@ -20,7 +20,13 @@ function [fmin, xmin, count] = parabols(F, a, b, eps)
             x2 = x1;
             x1 = a;
             break; 
-        end     
+        end
+        if ((b0 > x2) && (x2< x1)) && ((y(F,b0) >= y(F,x2)) && (y(F,x1) >= y(F,x2)))
+            x3 = b0;                %Одно из неравенств для метода парабол
+            x2 = x2;
+            x1 = x1;
+            break; 
+        end 
         if ((x1 < x2) &&(x2 < b0)) && ((y(F,x1) >= y(F,x2)) && (y(F,x2) <= y(F,b0)))
             x3 = b;                %Одно из неравенств для метода парабол
             x2 = x2;
@@ -47,53 +53,60 @@ function [fmin, xmin, count] = parabols(F, a, b, eps)
         curr_eps = curr_eps * t;
     end
     n = 1;
-    
+   
     % Значения функции в точках
     f1 = y(F, x1);
     f2 = y(F, x2);
-    f3 = y(F, x3);
-
-    % Итерационный процесс
-    while 1
+    f3 = y(F, x3);    % Итерационный процесс
+    while curr_eps > eps
         % Вычисление коэффициентов параболы
-        a1 = (f2 - f1) / (x2 - x1);
-        a2 = 1 / (x3 - x2) * ((f3 - f1) / (x3 - x1) - (f2 - f1) / (x2 - x1));
-        
+        if((x1 ~= x2) && (x2 ~= x3))
+            a1 = (f2 - f1) / (x2 - x1);
+            a2 = 1 / (x3 - x2) * ((f3 - f1) / (x3 - x1) - (f2 - f1) / (x2 - x1));
+        end
         % Новая точка минимума
         x_ = 0.5 * (x1 + x2 - a1 / a2);
         f_ = y(F, x_);
         count = count + 1;
-        % Обновление точек в зависимости от положения минимума
-        if x_ > x1 && x_ < x2
-            if f_ < f2
+
+        % Обновление точек
+        if x_ <= x2
+            if f_ >=f2
+                x1 = x_;
+                f1 = f_;
+               % x2 = x2;
+               % x3 = x3;
+               % continue;
+            else
+                %x1 = x1;
                 x3 = x2;
                 f3 = f2;
                 x2 = x_;
                 f2 = f_;
-            else
-                x1 = x_;
-                f1 = f_;
+                %continue;
             end
-        elseif x_ > x2 && x_ < x3
-            if f_ < f2
+        end
+        if x_ > x2
+            if f_ >= f2
+               %x1 = x1;
+                %x2 = x2;
+                x3 = x_;
+                f3 = f_;
+                %continue;
+            else
                 x1 = x2;
                 f1 = f2;
                 x2 = x_;
                 f2 = f_;
-            else
-                x3 = x_;
-                f3 = f_;
+                %x3 = x3;
             end
         end
-
-        % Проверка критерия остановки
-        if abs(x_ - x2) < eps
-            break;
-        end
+        % Обновляем текущее epsilon для проверки выхода
+        curr_eps = abs(x3 - x1);
     end
 
-    xmin = double(x_);
-    fmin = double(f_);
+    xmin = x2;
+    fmin = f2;
 end
 
 % Вспомогательная функция для вычисления значений функции
