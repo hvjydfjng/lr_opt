@@ -35,14 +35,6 @@ function [f_min, x_min,count] = broken_lines_method(f, a, b, tol)
         if delta_k <= tol
             x_min = x_star;
             f_min = fx_star;
-            clf
-            plot(x_vals, f_vals)
-            hold on
-            plot(x_min, f_min, 'rx', 'MarkerSize', 8)
-            title('Метод ломаных - Минимум функции')
-            xlabel('x')
-            ylabel('f(x)')
-            hold off
             break;
         end
 

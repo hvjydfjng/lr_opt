@@ -23,7 +23,7 @@ function [fmin,xmin, count] = porazr(F,a,b,eps)
         end
         yi = y(F,xi_start);
         xi_fin = xi_start;
-        del = del/2;
+        del = del/4;
     end
 
 
@@ -34,5 +34,5 @@ function [fmin,xmin, count] = porazr(F,a,b,eps)
         end
         yi = y(F,xi_start);
         xi_fin = xi_start;
-        del = del/2;
+        del = del/4;
     end
